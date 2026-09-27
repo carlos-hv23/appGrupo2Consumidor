@@ -1,9 +1,6 @@
 package pe.edu.cibertec.appGrupo2Consumidor.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,8 +11,8 @@ public class RabbitMqConfig {
     public static final String ROUTING_KEY = "Grupo2Routing";
 
     @Bean
-    public DirectExchange exchange() {
-        return new DirectExchange(EXCHANGE);
+    public TopicExchange exchange() {
+        return new TopicExchange(EXCHANGE);
     }
 
     @Bean
@@ -24,7 +21,7 @@ public class RabbitMqConfig {
     }
 
     @Bean
-    public Binding binding(Queue queue, DirectExchange exchange) {
+    public Binding binding(Queue queue, TopicExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
     }
 }
